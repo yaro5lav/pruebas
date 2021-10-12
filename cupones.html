@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Promoción-Mica-Registro</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+</head>
+<body>
+  <style>
+    .margen{
+      width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+    }
+    .v-application {
+  background-color: #00a86b;
+}
+  </style>
+    <div id="app">
+    <v-app >
+      <v-main >
+        <v-container >
+         <v-row>
+             <v-col  cols="12" class="margen">
+                <template  >
+                    <v-banner elevation="24">
+                      {{-- <v-form  ref="form" lazy-validation > --}}
+                         <v-col cols="12">
+                       <v-text-field v-model="name" outlined dense label="Nombre"></v-text-field>
+                       <v-text-field  v-model="email" outlined  dense label="Correo Electrónico"></v-text-field>
+                       <v-text-field  v-model="phoneNumber"  outlined dense label="Núm. Telefónico"></v-text-field>
+                    
+                        {{-- <v-row>  --}}
+                         <div cols="12" md="6" sm="6">
+                         <v-text-field v-model="folio_venta" outlined dense label="Folio de venta"></v-text-field>
+                         </div>
+                    
+                         <div cols="12"  md="6" sm="6">
+                           <v-select v-model="select" :items="items" label="Tipo de venta" outlined dense></v-select>
+                         </div>
+                        {{-- </v-row>  --}}
+                       <v-text-field v-model="name" outlined dense label="Sucursal"></v-text-field>
+                         </v-col>
+                     
+                            <v-btn color="warning" @click="resetValidation" >Reset Validation </v-btn>
+                       {{-- </v-form> --}}
+                   </v-banner>
+                  </template>
+             </v-col>
+         </v-row>
+        </v-container>
+      </v-main>
+    </v-app>
+  </div>
+    
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue2-filters/dist/vue2-filters.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-moment@4.1.0/dist/vue-moment.min.js"></script>
+<script>
+    
+        var url = '{{ Request::url() }}';
+        var app = new Vue({
+            vuetify: new Vuetify(window.vuetifyOptions),
+            el: '#app',
+            created: function(){
+                //this.load();
+            },
+            
+            data: {
+                config: window.config,
+                errors: [],  
+                loader: null,
+                loading: false,
+                //prueva-formulario
+                name: '',
+                email: '',
+                folio_venta:'',
+               select: '',
+                items: [
+                    'Facturado',
+                    'No facturado',
+                   
+                ],
+                phoneNumber: '',
+
+              
+          
+                
+            },
+           
+    
+   
+    
+  
+            methods:{
+          
+                load(){
+                    this.loading = true;
+                    var data = new FormData();
+                    data.append('proc', 'load');
+                    axios.post(url, data)
+                    .then(x => {
+                        this.loading = false;
+                        if(x.data.success === true){
+                           
+                            //x.data.success
+                            //x.data.errors
+                            //x.data.json
+                            //this.empresas       = x.data.json.empresas;
+                            //this.entidades_mex  = x.data.json.entidades_mex;
+                            //this.head           = x.data.json.head;
+                        }
+                        else{
+                            msj(x.data.message);
+                        }
+                    })
+                    .catch(error => {
+                        this.loading = false;
+                        msjCode(error);
+                    });
+                },
+
+            
+                // //SUBIR FORWARD
+                // subir_forward(){
+                //     this.loading = true;
+                //     this.messube = true;
+                //     var data = new FormData();
+                //     data.append('proc', 'subir_forward');
+                //     data.append('excel', this.excel);
+                //     data.append('date', this.date);
+                    
+                //     axios.post(url, data)
+                //     .then(x => {
+                //         this.loading = false;
+                //         if(x.data.success === true){
+                //             msj(x.data.message,'success');
+                //             this.$refs.excelfile.reset();
+                //             this.messube = false;
+                            
+                //         }
+                //         else{
+                //             msj(x.data.message);
+                //             this.messube = false;
+                //         }
+                //     })
+                //     .catch(error => {
+                //         this.loading = false;
+                //         this.messube = false;
+                //         msjCode(error);
+                //     });
+                // },
+                validate () {
+        this.$refs.form.validate()
+      },
+      reset () {
+        this.$refs.form.reset()
+      },
+                resetValidation () {
+        this.$refs.form.resetValidation()
+      },
+      
+    
+                
+                    
+            },
+            theme: {
+              accent: '#9c27b0',
+}
+            
+        });
+  </script>
+</html>
