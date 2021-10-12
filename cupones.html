@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="">
     <title>Promoción-Mica-Registro</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
@@ -34,13 +34,13 @@
              <v-col  cols="12" class="margen">
                 <template  >
                     <v-banner elevation="24">
-                      {{-- <v-form  ref="form" lazy-validation > --}}
+                    <v-form  ref="form" lazy-validation >
                          <v-col cols="12">
                        <v-text-field v-model="name" outlined dense label="Nombre"></v-text-field>
                        <v-text-field  v-model="email" outlined  dense label="Correo Electrónico"></v-text-field>
                        <v-text-field  v-model="phoneNumber"  outlined dense label="Núm. Telefónico"></v-text-field>
                     
-                        {{-- <v-row>  --}}
+                        <v-row>
                          <div cols="12" md="6" sm="6">
                          <v-text-field v-model="folio_venta" outlined dense label="Folio de venta"></v-text-field>
                          </div>
@@ -48,12 +48,12 @@
                          <div cols="12"  md="6" sm="6">
                            <v-select v-model="select" :items="items" label="Tipo de venta" outlined dense></v-select>
                          </div>
-                        {{-- </v-row>  --}}
+                        </v-row>
                        <v-text-field v-model="name" outlined dense label="Sucursal"></v-text-field>
                          </v-col>
                      
                             <v-btn color="warning" @click="resetValidation" >Reset Validation </v-btn>
-                       {{-- </v-form> --}}
+                       </v-form>
                    </v-banner>
                   </template>
              </v-col>
@@ -70,7 +70,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue-moment@4.1.0/dist/vue-moment.min.js"></script>
 <script>
     
-        var url = '{{ Request::url() }}';
+        var url = 'Request::url()';
         var app = new Vue({
             vuetify: new Vuetify(window.vuetifyOptions),
             el: '#app',
